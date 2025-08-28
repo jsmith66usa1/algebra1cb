@@ -6,6 +6,9 @@
     <title>Full-Screen Chalkboard with Curriculum</title>
     <!-- Tailwind CSS CDN for general styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* Custom styles for the chalkboard effect */
         html, body {
@@ -13,6 +16,7 @@
             padding: 0;
             overflow: hidden; /* Prevent scrolling */
             font-family: 'Inter', sans-serif;
+            background-color: #1a202c; /* Ensure body has a consistent background */
         }
 
         #chalkboard-canvas {
@@ -25,7 +29,7 @@
             cursor: crosshair;
             touch-action: none; /* Prevent default touch actions like scrolling/zooming */
         }
-        
+
         /* Bottom control container for all tools and curriculum */
         .bottom-controls-container {
             position: fixed;
@@ -58,7 +62,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: #fff;
         }
-        
+
         /* Specific styling for active buttons */
         .bottom-controls-container button.active,
         .bottom-controls-container select.active {
@@ -181,13 +185,13 @@
         let isDrawing = false;
         let lastX = 0;
         let lastY = 0;
-        let currentColor = '#f4d03f'; // Bright yellow chalk color
+        let currentColor = '#fceb9e'; // Bright yellow chalk color
 
         // This array will hold all of the user's drawing paths and text entries
         let drawingHistory = [];
         let currentDrawingPath = [];
 
-        // App state to manage the active mode 
+        // App state to manage the active mode
         const appState = {
             mode: 'draw', // 'draw', 'erase', 'text', 'curriculum'
             isGridActive: false,
@@ -204,7 +208,7 @@
         const LIST_ITEM_FONT_SIZE = 26; // Increased size
         const GRID_SPACING = 50;
 
-        // The curriculum content
+        // The curriculum content with standard text symbols
         const curriculum = [
             {
                 session: "Session 1: Foundations of Algebra",
@@ -212,7 +216,7 @@
                     {
                         name: "Variables and Expressions",
                         examples: [
-                            "Example 1: Solve for x in the expression 2x + 5 = 15.",
+                            "Example 1: Simplify the expression 2x + 5.",
                             "Example 2: Evaluate 3y - 7 when y = 4."
                         ],
                         exercises: [
@@ -956,7 +960,7 @@
             ctx.restore(); // Restore context state
         }
 
-        // Function to draw chalk-like text (this remains the same for the curriculum content)
+        // Function to draw chalk-like text
         function drawChalkText(text, x, y, color, fontSize) {
             ctx.save();
             ctx.font = `300 ${fontSize}px 'Inter', sans-serif`;
@@ -1178,7 +1182,7 @@
         canvas.addEventListener('touchend', stopDrawing);
         canvas.addEventListener('touchcancel', stopDrawing);
         canvas.addEventListener('click', handleCanvasClickForText);
-        
+
         // Helper function to set the app mode and update UI
         function setMode(newMode) {
             appState.mode = newMode;
